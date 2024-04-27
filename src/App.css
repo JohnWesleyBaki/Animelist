@@ -1,0 +1,37 @@
+
+
+.select-container {
+  margin-left: 20px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  color: aquamarine;
+}
+
+.select-label {
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+
+.select {
+  min-width: 200px;
+  color: #130101;
+  background: rgba(222, 217, 217, 0.954);
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,.4);
+  padding: 10px;
+  box-sizing: border-box;
+  outline: 0;
+  cursor: pointer;
+}
+
+/* Styling for the select arrow */
+.select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #bdbdbd;
+}
