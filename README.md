@@ -26,4 +26,6 @@ Follow these instructions to get the AnimeList app up and running on your local 
 git clone https://github.com/johnwesleybaki/AnimeList.git
 ```
 2.Run the application using 
-  npm run dev
+  ```bash
+npm run dev
+```
