@@ -5,12 +5,15 @@ import { SlArrowLeftCircle } from "react-icons/sl";
 import { useLocation } from 'react-router-dom'; 
 import AnimeInfo from './AnimeInfo'; 
 
-function AnimePage() {
+
+function AnimePage({setShowSearchAndSort}) {
   const location = useLocation();
   const anime = location.state.anime; 
   const navigate = useNavigate();
 function handleClick(){
+  setShowSearchAndSort(true);
   navigate('/');
+  
 }  
 
   return (

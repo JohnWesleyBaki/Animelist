@@ -5,6 +5,7 @@ import AnimeList from './AnimeList';
 import AnimePage from './AnimePage';
 import  './App.css';
 
+
 function App() {
   const [animes, setAnimes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -66,7 +67,9 @@ useEffect(() => {
   }
 
   return (
+
     <Router>
+      
       <div className='container'>
       {showSearchAndSort && (
           <>
@@ -96,12 +99,11 @@ useEffect(() => {
         </div>
         
         <Routes>
-          <Route path="/" element={<AnimeList animes={SortedAnimes} />} />
           <Route
             path="/"
-            element={<AnimeList setShowSearchAndSort={setShowSearchAndSort} />}
+            element={<AnimeList animes={SortedAnimes} setShowSearchAndSort={setShowSearchAndSort} />}
           />
-          <Route path="/anime/:id" element={<AnimePage />} />
+          <Route path="/anime/:id" element={<AnimePage setShowSearchAndSort={setShowSearchAndSort}/>} />
         </Routes>
       
     </Router>
