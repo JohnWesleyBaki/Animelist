@@ -1,111 +1,49 @@
-
-
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AnimeList from './AnimeList';
-import AnimePage from './AnimePage';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AnimeProvider } from "./contexts/AnimeContext";
+import Login from "./auth/Login";
+import Signup from "./auth/Signup";
+import PrivateRoute from "./auth/PrivateRoute";
+import AnimeHome from "./components/AnimeHome";
+import AnimePage from "./components/AnimePage";
 
 function App() {
-  const [animes, setAnimes] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("");
-  const [showSearchAndSort, setShowSearchAndSort] = useState(true);
-  const [loading, setLoading] = useState(false); 
-
-  // Function to fetch anime data
-  const getAnime = async (name) => {
-    try {
-      setLoading(true); // Set loading state to true when fetching data
-      const response = await fetch(`https://api.jikan.moe/v4/anime?q=${name}`);
-      const data = await response.json();
-      setLoading(false); // Set loading state to false when data fetching is done
-      return data.data;
-    } catch (error) {
-      setLoading(false); // Set loading state to false in case of error
-      console.error('Error fetching anime data:', error);
-      return [];
-    }
-  };
-
-  const handleSearch = async () => {
-    if (searchTerm.trim() !== "") {
-      const animeData = await getAnime(searchTerm);
-      setAnimes(animeData);
-    }
-  };
-
-  const handleSortChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  useEffect(() => {
-    // Fetch anime data and update state for initial load
-    getAnime("Naruto")
-      .then(data => setAnimes(data))
-      .catch(error => console.error('Error fetching anime data:', error));
-  }, []);
-
-  // sort the anime list based on selected criteria
-  let SortedAnimes = [...animes];
-
-  if (sortBy) {
-    SortedAnimes.sort((a, b) => {
-      if (sortBy === "title") {
-        return a.title.localeCompare(b.title);
-      } else if (sortBy === "ranking") {
-        return a.rank - b.rank;
-      } else if (sortBy === "popularity") {
-        return a.popularity - b.popularity;
-      }
-    });
-  }
-
   return (
-    <Router>
-      <div className='container'>
-        {showSearchAndSort && (
-          <>
-            <input
-              type="text"
-              placeholder="Search for anime e.g. Naruto"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button onClick={handleSearch}>Search</button>
-            <div className="select-container">
-              <label htmlFor="sortBy" className="select-label">Sort By:</label>
-              <select id="sortBy" className="select" value={sortBy} onChange={handleSortChange}>
-                <option value="">None</option>
-                <option value="title">Title</option>
-                <option value="ranking">Ranking</option>
-                <option value="popularity">Popularity</option>
-              </select>
-              <span className="select-arrow">&#9660;</span>
-            </div>
-          </>
-        )}
-      </div>
-
-      {loading ? (
-     <div className="loader">
-     <div className="spinner"></div>
-     <p>Loading...</p>
-   </div>
-   
-    
-     ): (
+    <AnimeProvider>
+      <Router>
         <Routes>
-          <Route
-            path="/"
-            element={<AnimeList animes={SortedAnimes} setShowSearchAndSort={setShowSearchAndSort} />}
-          />
-          <Route path="/anime/:id" element={<AnimePage setShowSearchAndSort={setShowSearchAndSort} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<AnimeHome />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/anime/:id" element={<AnimePage />} />
         </Routes>
-      )}
-
-    </Router>
+      </Router>
+    </AnimeProvider>
   );
 }
 
 export default App;
+
+// import React from "react";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import AnimePage from "./AnimePage";
+// import Login from "./Login";
+// import Signup from "./Signup";
+// import PrivateRoute from "./PrivateRoute";
+// import "./App.css";
+// import AnimeHome from "./AnimeHome";
+
+// function App() {
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/login" element={<Login setIsAuthenticated={false} />} />
+//         <Route path="/signup" element={<Signup setIsAuthenticated={false} />} />
+//         <PrivateRoute path="/" element={<AnimeHome />} />
+//         <PrivateRoute path="/anime/:id" element={<AnimePage />} />
+//       </Routes>
+//     </Router>
+//   );
+// }
+
+// export default App;
