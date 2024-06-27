@@ -1,8 +1,10 @@
 
 import { database,ID} from './lib/appwrite';
 
-const COLLECTION_ID = '6651c2ac003e29234c19'; 
-const DATABASE_ID = '6651c274003a2d832941';
+
+
+const COLLECTION_ID = import.meta.env.VITE_COLLECTION_ID_NOTES; 
+const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
 
 export const addAnimeToList = async (animeId,userId ,category) => {
 
